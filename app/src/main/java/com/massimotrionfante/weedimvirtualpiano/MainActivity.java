@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.billthefarmer.mididriver.MidiDriver;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 URL miaURL = null;
                 JSONArray mieNote = new JSONArray(notes);
                 JSONArray mieiDelay = new JSONArray(delays);
+
                 try
                 {
                     miaURL = new URL(weedimURL + "/saveSession/" + mieNote + "/" + mieiDelay);
@@ -353,33 +355,38 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     {
         @Override
         protected String doInBackground(URL... urls) {
-            String result=null;
-            URL miaURL = urls[0];
-            try {
-                // Connect
-                HttpURLConnection connection = (HttpURLConnection) miaURL.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setDoOutput(true);
-                connection.setRequestProperty("Content-Type","text/plain");
-                // Get the session number
-                InputStream stream = connection.getInputStream();
-                StringBuffer sb = new StringBuffer();
-                try {
-                    int chr;
-                    while ( (chr = stream.read()) != -1 )
-                    {
-                        sb.append((char) chr);
-                    }
-                    result = sb.toString();
-                    stream.close();
-                } catch (Exception e){}
-                connection.disconnect();
-            } catch (Exception e)
+            if (notes.isEmpty())
             {
-                result = "WTF";
+                return "NOP";
             }
+            else {
+                String result = null;
+                URL miaURL = urls[0];
+                try {
+                    // Connect
+                    HttpURLConnection connection = (HttpURLConnection) miaURL.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setDoOutput(true);
+                    connection.setRequestProperty("Content-Type", "text/plain");
+                    // Get the session number
+                    InputStream stream = connection.getInputStream();
+                    StringBuffer sb = new StringBuffer();
+                    try {
+                        int chr;
+                        while ((chr = stream.read()) != -1) {
+                            sb.append((char) chr);
+                        }
+                        result = sb.toString();
+                        stream.close();
+                    } catch (Exception e) {
+                    }
+                    connection.disconnect();
+                } catch (Exception e) {
+                    result = "WTF";
+                }
 
-            return result;
+                return result;
+            }
         }
         protected void onPostExecute(String result)
         {
@@ -388,8 +395,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 outputMessage.setText("");
                 sessionNum.setText("There are issues with connectivity...");
             }
+            else if (result.equals("NOP"))
+            {
+                outputMessage.setText("");
+                sessionNum.setText("Your didn't record anything yet!");
+            }
             else {
-                outputMessage.setText("Record was sent with session:");
+                outputMessage.setText("Record was sent with session number:");
                 sessionNum.setText(result);
             }
         }
