@@ -1,7 +1,9 @@
 package com.massimotrionfante.weedimvirtualpiano;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.billthefarmer.mididriver.MidiDriver;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Stack;
 
 
 public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidiStartListener {
+
+    // CHANGE THIS TO THE URL WEEDIM IS RUNNING ON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private String weedimURL = "http://192.168.1.9:5000";
+    // CHANGE THIS TO THE URL WEEDIM IS RUNNING ON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // Data structures for Midi to work
     private MidiDriver midiDriver;
@@ -37,9 +49,12 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private Button noteA;
     private Button noteAm;
     private Button noteB;
+    private Button send;
     private ImageView lowerOctave;
     private ImageView upperOctave;
     private TextView ottavaVisual;
+    private TextView outputMessage;
+    private TextView sessionNum;
     private ImageView lowerLength;
     private ImageView upperLength;
     private TextView lengthVisual;
@@ -70,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         noteA = findViewById(R.id.A);
         noteAm = findViewById(R.id.Am);
         noteB = findViewById(R.id.B);
+        send = findViewById(R.id.send);
+
+        outputMessage = findViewById(R.id.outputMessage);
+        sessionNum = findViewById(R.id.sessionNumber);
 
         lowerOctave = findViewById(R.id.lowOctave);
         upperOctave = findViewById(R.id.uppOctave);
@@ -96,6 +115,24 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     protected void onStart() {
         super.onStart();
 
+        // Send recorded music here
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendFunction invia = new SendFunction();
+                URL miaURL = null;
+                JSONArray mieNote = new JSONArray(notes);
+                JSONArray mieiDelay = new JSONArray(delays);
+                try
+                {
+                    miaURL = new URL(weedimURL + "/saveSession/" + mieNote + "/" + mieiDelay);
+                }
+                catch (Exception e) {}
+                invia.execute(miaURL);
+
+            }
+        });
+
         // Put all onClickListeners here, to serve the basic piano functionality
         noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
         noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
@@ -114,13 +151,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0;i<notes.size();i++)
-                {
-                    playNote(notes.get(i).byteValue());
-                    try {
-                        Thread.sleep( (32 / delays.get(i).intValue()) * 64);
-                    } catch (Exception e){}
-                }
+                ExtraThread myPlay = new ExtraThread();
+                myPlay.run();
             }
         });
 
@@ -149,9 +181,9 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         lowerOctave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ottava>1) {
+                if (ottava>2) {
                     ottava--;
-                    ottavaVisual.setText(Integer.toString(ottava));
+                    ottavaVisual.setText(Integer.toString(ottava-1));
                 }
             }
         });
@@ -162,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             public void onClick(View v) {
                 if (ottava<7) {
                     ottava++;
-                    ottavaVisual.setText(Integer.toString(ottava));
+                    ottavaVisual.setText(Integer.toString(ottava-1));
                 }
             }
         });
@@ -171,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         lowerLength.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (lunghezza!=16) {
+                if (lunghezza!=32) {
                     lunghezza *= 2;
                     lengthVisual.setText(Integer.toString(lunghezza));
                 }
@@ -297,9 +329,71 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         if (onOffToggle.getText().equals("ON"))
         {
             notes.push(nota);
-            delays.push(lunghezza);
+            delays.push(32/lunghezza);
         }
 
     }
+
+    // This is the thread that will play notes.
+    public class ExtraThread extends Thread
+    {
+        public void run()
+        {
+            for (int i=0;i<notes.size();i++)
+            {
+                playNote(notes.get(i).byteValue());
+                try {
+                    Thread.sleep( (delays.get(i).intValue()) * 64);
+                } catch (Exception e){}
+            }
+        }
+    }
+
+    public class SendFunction extends AsyncTask<URL,Void,String>
+    {
+        @Override
+        protected String doInBackground(URL... urls) {
+            String result=null;
+            URL miaURL = urls[0];
+            try {
+                // Connect
+                HttpURLConnection connection = (HttpURLConnection) miaURL.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type","text/plain");
+                // Get the session number
+                InputStream stream = connection.getInputStream();
+                StringBuffer sb = new StringBuffer();
+                try {
+                    int chr;
+                    while ( (chr = stream.read()) != -1 )
+                    {
+                        sb.append((char) chr);
+                    }
+                    result = sb.toString();
+                    stream.close();
+                } catch (Exception e){}
+                connection.disconnect();
+            } catch (Exception e)
+            {
+                result = "WTF";
+            }
+
+            return result;
+        }
+        protected void onPostExecute(String result)
+        {
+            if (result.equals("WTF"))
+            {
+                outputMessage.setText("");
+                sessionNum.setText("There are issues with connectivity...");
+            }
+            else {
+                outputMessage.setText("Record was sent with session:");
+                sessionNum.setText(result);
+            }
+        }
+    }
+
 
 }

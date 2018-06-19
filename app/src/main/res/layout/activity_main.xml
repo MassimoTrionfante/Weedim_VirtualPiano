@@ -4,12 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/starsbackground"
     tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/tastonero"
+        android:text="Send Recorded Music"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/functions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/functions"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/partesup"
         app:layout_constraintBottom_toTopOf="@+id/piano"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="4"
+            android:text="3"
             android:textColor="@color/weedimGreen"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -113,19 +129,19 @@
             android:id="@+id/lowLen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toEndOf="@+id/textView8"
-            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/sottrai" />
 
         <ImageView
             android:id="@+id/uppLen"
             android:layout_width="wrap_content"
-            android:background="@android:color/transparent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.0"
@@ -200,12 +216,11 @@
     </android.support.constraint.ConstraintLayout>
 
 
-
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/piano"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
+        android:background="@color/weedimBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -369,5 +384,35 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/outputMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/functions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/sessionNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="#FF0000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/functions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outputMessage"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
