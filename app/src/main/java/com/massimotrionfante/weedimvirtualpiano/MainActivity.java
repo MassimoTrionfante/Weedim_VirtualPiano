@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,14 +11,10 @@ import android.widget.TextView;
 
 import org.billthefarmer.mididriver.MidiDriver;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -148,18 +142,18 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         });
 
         // Put all onClickListeners here, to serve the basic piano functionality
-        noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteD.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteDm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteE.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteF.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteFm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteG.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteGm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteA.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteAm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
-        noteB.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteD.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteDm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteE.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteF.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteFm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteG.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteGm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteA.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteAm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        noteB.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
 
         // Go back to title screen View on the arrow press
         title.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +180,9 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             @Override
             public void onClick(View v) {
                 ExtraThread myPlay = new ExtraThread(); // This could require more than 7 seconds.
-                myPlay.run(); // Thus, we'll give this task to another thread.
+                myPlay.execute(); // Thus, we'll give this task to an AsyncTask.
+                outputMessage.setText("Executing song...");
+                sessionNum.setText("");
             }
         });
 
@@ -388,22 +384,25 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             notes.push(nota);
             delays.push(32/lunghezza);
         }
-
     }
 
-    // This is the thread that will play notes.
-    public class ExtraThread extends Thread
+    // This is the AsyncTask that will play notes (so that UI won't freeze while playing notes).
+    public class ExtraThread extends AsyncTask<Void, Void, String>
     {
-        public void run()
-        {
-            for (int i=0;i<notes.size();i++)
-            {
-                playNote(notes.get(i).byteValue()); // Play note...
-                try {
-                    Thread.sleep( (delays.get(i).intValue()) * 64); //... then wait for its delay.
-                } catch (Exception e){}
+        public String doInBackground(Void...args) {
+            if (notes.size() > 0) {
+                for (int i = 0; i < notes.size(); i++) {
+                    playNote(notes.get(i).byteValue()); // Play note...
+                    try {
+                        Thread.sleep((delays.get(i).intValue()) * 64); //... then wait for its delay.
+                    } catch (Exception e) {}
+                }
             }
-            outputMessage.setText("");
+            return "OK";
+        }
+        public void onPostExecute(String result)
+        {
+            outputMessage.setText("Execution terminated");
             sessionNum.setText("");
         }
     }
