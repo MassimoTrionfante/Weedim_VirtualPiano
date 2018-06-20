@@ -25,7 +25,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/functions"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@drawable/partesup"
         app:layout_constraintBottom_toTopOf="@+id/piano"
         app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +159,7 @@
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toEndOf="@+id/uppLen"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
+            app:srcCompat="@drawable/doanundo" />
 
         <ImageView
             android:id="@+id/play"
@@ -204,22 +204,21 @@
             android:id="@+id/rest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintHorizontal_bias="0.41"
             app:layout_constraintStart_toEndOf="@+id/play"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/dialog_frame" />
+            app:srcCompat="@drawable/addarest" />
 
     </android.support.constraint.ConstraintLayout>
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/piano"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         android:background="@color/weedimBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -227,161 +226,183 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <Button
-            android:id="@+id/C"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="C"
-            android:textColor="@color/weedimBlack"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/Cm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tastonero"
-            android:text="C+"
-            android:textColor="@color/weedimWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/C"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/C"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="C"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/D"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="D"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Cm"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/Cm"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tastonero"
+                android:text="C+"
+                android:textColor="@color/weedimWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/C"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Dm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tastonero"
-            android:text="D+"
-            android:textColor="@color/weedimWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/D"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/D"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="D"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/Cm"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/E"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="E"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Dm"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/Dm"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tastonero"
+                android:text="D+"
+                android:textColor="@color/weedimWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/D"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/F"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="F"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/E"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/E"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="E"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/Dm"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Fm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tastonero"
-            android:text="F+"
-            android:textColor="@color/weedimWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/F"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/F"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="F"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/E"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/G"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="G"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Fm"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/Fm"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tastonero"
+                android:text="F+"
+                android:textColor="@color/weedimWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/F"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Gm"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tastonero"
-            android:text="G+"
-            android:textColor="@color/weedimWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/G"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/G"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="G"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/Fm"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/A"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="A"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Gm"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/Gm"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tastonero"
+                android:text="G+"
+                android:textColor="@color/weedimWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/G"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/Am"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tastonero"
-            android:text="A+"
-            android:textColor="@color/weedimWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/A"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/A"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="A"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/Gm"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/B"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/tasto"
-            android:text="B"
-            android:textColor="@color/weedimBlack"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/Am"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/Am"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tastonero"
+                android:text="A+"
+                android:textColor="@color/weedimWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/A"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/B"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tasto"
+                android:text="B"
+                android:textColor="@color/weedimBlack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/Am"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -394,6 +415,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
+        android:text="Plugin loaded succesfully!"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/functions"
@@ -414,5 +436,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outputMessage"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/gotosettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tastonero"
+        app:layout_constraintBottom_toTopOf="@+id/functions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toEndOf="@+id/send"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/miacog" />
+
+    <ImageView
+        android:id="@+id/gototitlescreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tastonero"
+        app:layout_constraintBottom_toTopOf="@+id/functions"
+        app:layout_constraintEnd_toStartOf="@+id/send"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/gobacktitle" />
 
 </android.support.constraint.ConstraintLayout>

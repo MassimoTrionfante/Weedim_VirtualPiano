@@ -1,5 +1,6 @@
 package com.massimotrionfante.weedimvirtualpiano;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,11 +26,9 @@ import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidiStartListener {
 
-    // CHANGE THIS TO THE URL WEEDIM IS RUNNING ON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    private String weedimURL = "http://192.168.1.9:5000";
-    // CHANGE THIS TO THE URL WEEDIM IS RUNNING ON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private String weedimURL; // This contains the URL of Weedim's web service
 
-    // Data structures for Midi to work
+    // Data structures for Midi addon/plugin/etc to work
     private MidiDriver midiDriver;
     private Stack<Integer> notes;
     private Stack<Integer> delays;
@@ -50,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private Button noteA;
     private Button noteAm;
     private Button noteB;
+
+    // Various Views
     private Button send;
     private ImageView lowerOctave;
     private ImageView upperOctave;
@@ -63,11 +64,18 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private ImageView playButton;
     private ImageView undo;
     private ImageView rest;
+    private ImageView settings;
+    private ImageView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start the app
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Get the URL from the old intent (it will either contain the base URL, or the working URL inputted in the settings view)
+        Intent oldapp = getIntent();
+        weedimURL = oldapp.getStringExtra("weedimURL");
 
         // Start midi driver
         midiDriver = new MidiDriver();
@@ -104,9 +112,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         undo = findViewById(R.id.undo);
         rest = findViewById(R.id.rest);
 
+        settings = findViewById(R.id.gotosettings);
+        title = findViewById(R.id.gototitlescreen);
+
         ottava = 4;
         lunghezza = 4;
 
+        // These two stacks will save all our notes and delays, in case user records
         notes = new Stack<Integer>();
         delays = new Stack<Integer>();
 
@@ -116,45 +128,65 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     protected void onStart() {
         super.onStart();
 
-        // Send recorded music here
+        // Send recorded music to Weedim server here
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SendFunction invia = new SendFunction();
                 URL miaURL = null;
-                JSONArray mieNote = new JSONArray(notes);
+                JSONArray mieNote = new JSONArray(notes);   // Make JSONArrays for our request
                 JSONArray mieiDelay = new JSONArray(delays);
 
-                try
+                try // Build the URL...
                 {
                     miaURL = new URL(weedimURL + "/saveSession/" + mieNote + "/" + mieiDelay);
                 }
                 catch (Exception e) {}
-                invia.execute(miaURL);
+                invia.execute(miaURL); // ...and execute it!
 
             }
         });
 
         // Put all onClickListeners here, to serve the basic piano functionality
-        noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteD.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteDm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteE.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteF.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteFm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteG.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteGm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteA.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteAm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
-        noteB.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); }});
+        noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteD.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteDm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteE.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteF.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteFm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteG.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteGm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteA.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteAm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+        noteB.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); }});
+
+        // Go back to title screen View on the arrow press
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent titolo = new Intent(MainActivity.this, IntroActivity.class);
+                titolo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // This flag is super useful: it makes sure older activities go away.
+                startActivity(titolo);
+            }
+        });
+
+        // Go to settings View on the fancy cog press
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mysettings = new Intent(MainActivity.this,SettingsActivity.class);
+                mysettings.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mysettings);
+            }
+        });
 
         // Play recorded song on play press
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExtraThread myPlay = new ExtraThread();
-                myPlay.run();
+                ExtraThread myPlay = new ExtraThread(); // This could require more than 7 seconds.
+                myPlay.run(); // Thus, we'll give this task to another thread.
             }
         });
 
@@ -166,26 +198,36 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 {
                     notes.pop();
                     delays.pop();
+                    outputMessage.setText("Deleted last recorded note.");
+                    sessionNum.setText("");
                 }
             }
         });
 
-        // Push a rest when clicking on the black box
+        // Push a rest when clicking on the red box
         rest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notes.push(0);
-                delays.push(lunghezza);
+                outputMessage.setText("");
+                if (onOffToggle.getText().equals("ON")) {
+                    notes.push(0);
+                    delays.push(lunghezza);
+                    outputMessage.setText("Added new rest.");
+                    sessionNum.setText("");
+                }
             }
         });
 
         //Lower octave by 1
+        //(I had to find some workarounds, to prevent unvalid notes to play)
         lowerOctave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ottava>2) {
                     ottava--;
                     ottavaVisual.setText(Integer.toString(ottava-1));
+                    outputMessage.setText("");
+                    sessionNum.setText("");
                 }
             }
         });
@@ -197,6 +239,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 if (ottava<7) {
                     ottava++;
                     ottavaVisual.setText(Integer.toString(ottava-1));
+                    outputMessage.setText("");
+                    sessionNum.setText("");
                 }
             }
         });
@@ -208,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 if (lunghezza!=32) {
                     lunghezza *= 2;
                     lengthVisual.setText(Integer.toString(lunghezza));
+                    outputMessage.setText("");
+                    sessionNum.setText("");
                 }
             }
         });
@@ -220,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 {
                     lunghezza /= 2;
                     lengthVisual.setText(Integer.toString(lunghezza));
+                    outputMessage.setText("");
+                    sessionNum.setText("");
                 }
             }
         });
@@ -231,11 +279,14 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 if (onOffToggle.getText().equals("OFF"))
                 {
                     onOffToggle.setText("ON");
+                    outputMessage.setText("Notes recording enabled!");
                 }
                 else
                 {
                     onOffToggle.setText("OFF");
+                    outputMessage.setText("Notes recording disabled!");
                 }
+                sessionNum.setText("");
             }
         });
 
@@ -250,9 +301,6 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
 
         View decorView = getWindow().getDecorView();
         // Hide both the navigation bar and the status bar.
-        // SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-        // a general rule, you should design your app to hide the status bar whenever you
-        // hide the navigation bar.
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
     }
@@ -263,10 +311,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         midiDriver.stop();
     }
 
+    // This method will start as soon as the Midi Driver loads succesfully.
+    // Since we want to pair web service with phone app, we'll let it play the very same jingle on succesful load!
     @Override
     public void onMidiStart() {
 
         // Beginning jingle (55 57 59 60 with 0.1 second delay)
+        // (note that, unlike Midi.js, this plugin doesn't give you a delay input value, so I was forced to use Thread.sleep())
         try {
             Thread.sleep(1000);
             playNote((byte)67);
@@ -280,21 +331,25 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         } catch (Exception e){}
     }
 
+    // Base function that plays a note
     private void playNote(byte nota){
         byte[] musica = new byte[3];
-        musica[0] = (byte) 0x90; // 0x90 -> note ON
+        musica[0] = (byte) 0x90; // 0x90 -> note ON in channel 0
         musica[1] = nota;
-        musica[2] = (byte) 127; // velocity al massimo (127)
+        musica[2] = (byte) 127; // velocity at maximum (127)
         // Play a note!
         midiDriver.write(musica);
     }
 
+    // This function plays a note depending on what's in its text field.
+    // It's used for the Piano to work properly, and to play the correct notes.
     private void determinaNota(Button v)
     {
         String ottavaStr = v.getText().toString();
         int nota=0;
 
-        // Process note pitch...
+        // Process note pitch.
+        // We process white notes first.
         switch(ottavaStr.charAt(0))
         {
             case 'C':
@@ -319,13 +374,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 nota= (ottava * 12) + 11;
         }
 
-        // Process major notes...
-        if (ottavaStr.length()==2) // Process major notes
+        // Process black notes.
+        if (ottavaStr.length()==2)
         {
             nota += 1;
         }
 
-        playNote((byte)nota);
+        playNote((byte)nota); // Play the note, once we got which one it is.
 
         //If it's recording, then store note value and delay in global arrays
         if (onOffToggle.getText().equals("ON"))
@@ -343,21 +398,24 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         {
             for (int i=0;i<notes.size();i++)
             {
-                playNote(notes.get(i).byteValue());
+                playNote(notes.get(i).byteValue()); // Play note...
                 try {
-                    Thread.sleep( (delays.get(i).intValue()) * 64);
+                    Thread.sleep( (delays.get(i).intValue()) * 64); //... then wait for its delay.
                 } catch (Exception e){}
             }
+            outputMessage.setText("");
+            sessionNum.setText("");
         }
     }
 
+    // This class takes care of sending data to Weedim's web service.
     public class SendFunction extends AsyncTask<URL,Void,String>
     {
         @Override
         protected String doInBackground(URL... urls) {
             if (notes.isEmpty())
             {
-                return "NOP";
+                return "NOP"; // Don't go trough it if we didn't record anything.
             }
             else {
                 String result = null;
@@ -368,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                     connection.setRequestMethod("POST");
                     connection.setDoOutput(true);
                     connection.setRequestProperty("Content-Type", "text/plain");
-                    // Get the session number
+                    // Get the session number, in an unusual way: getting it character after character.
                     InputStream stream = connection.getInputStream();
                     StringBuffer sb = new StringBuffer();
                     try {
@@ -382,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                     }
                     connection.disconnect();
                 } catch (Exception e) {
-                    result = "WTF";
+                    result = "WTF"; // Return this result if we can't connect with server.
                 }
 
                 return result;
@@ -390,19 +448,19 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         }
         protected void onPostExecute(String result)
         {
-            if (result.equals("WTF"))
+            if (result.equals("WTF")) // WTF -> Connectivity issues
             {
                 outputMessage.setText("");
                 sessionNum.setText("There are issues with connectivity...");
             }
-            else if (result.equals("NOP"))
+            else if (result.equals("NOP")) // NOP -> We didn't record anything
             {
                 outputMessage.setText("");
                 sessionNum.setText("Your didn't record anything yet!");
             }
             else {
-                outputMessage.setText("Record was sent with session number:");
-                sessionNum.setText(result);
+                outputMessage.setText("Record was sent with session number:"); // In none of above, record was sent!
+                sessionNum.setText(result); // Give session number for user to use in the Weedim Web App.
             }
         }
     }
