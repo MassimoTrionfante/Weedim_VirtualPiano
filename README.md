@@ -8,8 +8,8 @@ The folder is an Android Studio Project developed on Windows. It should be fine 
 First, make sure you have Weedim running on any device (in case you're not, get the repo here: https://github.com/MassimoTrionfante/Weedim). Keep in mind the IP address and the port you choose for running the Weedim Web Services.
 
 The app's first activity has 3 buttons:
-- START: start the app right away, the URL used is the default one used for its developing. On 99% cases, it won't work on your end;
-- SETTINGS: makes you able to set the URL of the machine where you are running Weedim's Web Services before starting the main activity. For now, this is the recommended alternative, since Weedim doesn't run on a static URL address yet;
+- START: starts the app right away. It's the button to press if you want to use the app as a virtual piano only;
+- SETTINGS: brings you to an activity which makes you able to set the URL of the machine where you are running Weedim's Web Services. For now, this is the recommended alternative if you want to use the app together with Weedim's web interface, since Weedim doesn't run on a static URL address yet;
 - EXIT: closes the app in the clean way;
 
 Once you get in the main activity, your screen will automatically go in landscape mode, and you'll see a piano with many buttons on it.
