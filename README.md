@@ -1,8 +1,8 @@
 # Weedim Virtual Piano
 This simple Android App was developed as project for an exam. Its aim is to both be an effective virtual piano, and to be a tool which can be combined with the Weedim Desktop app, making your life easier to build simple mono-channeled MIDIs.
 
-# How to install
-The folder is an Android Studio Project developed on Windows. It should be fine to clone the whole repo as Android Studio project.
+# How to install Weedim Virtual Piano
+This repo is the content of the generic Android Studio Project. Simply clone the whole repo and open it using Android Studio. In case you get issues about "deleting old versions of the app", simply click OK, and it should install anyways.
 
 # How to use
 First, make sure you have Weedim running on any device (in case you're not, get the repo here: https://github.com/MassimoTrionfante/Weedim). Keep in mind the IP address and the port you choose for running the Weedim Web Services.
@@ -24,12 +24,12 @@ In the blue bar above the piano, there are the following functionalities:
 On the top of the screen, you'll see other 3 buttons:
 - The arrow button on the leftmost simply brings you back to the title screen;
 - The cog button on the rightmost simply brings you back to the settings screen, making you able to reset the URL;
-- The big button in the middle is the button you press when sending your recorded tape to Weedim's database. Once you recorded something, after you're satisfied with the result, press it.
+- The button in the middle is the button you press when sending your recorded tape to Weedim's database. Once you recorded something, after you're satisfied with the result, press it, and Weedim Virtual Piano will save the tape in its database.
 
 When you send a recorded tape, if everything went well, you'll see a sequence of numbers in red. That's the "session number" you have to input in Weedim's Web Interface. Once you input the correct number, the web app will load again, starting with the sequence you inputted from your phone!
 
 # Known bugs
-- For now, passing recorded tapes in the web app of Weedim works with inner structures, but you won't see notes graphically. I'm currently working on figuring out how to do so.
+While the app does its job properly, the web interface could get randomly buggy when you use it to load recorded tapes from your phone. For more details, please refer to "Known bugs" in Weedim's repo here https://github.com/MassimoTrionfante/Weedim
 
 # Special thanks
 The project uses a driver built by billthefarmer. Link to his repo here: https://github.com/billthefarmer/mididriver
