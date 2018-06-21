@@ -12,21 +12,23 @@ The app's first activity has 3 buttons:
 - SETTINGS: brings you to an activity which makes you able to set the URL of the machine where you are running Weedim's Web Services. For now, this is the recommended alternative if you want to use the app together with Weedim's web interface, since Weedim doesn't run on a static URL address yet;
 - EXIT: closes the app in the clean way;
 
-Once you get in the main activity, your screen will automatically go in landscape mode, and you'll see a piano with many buttons on it.
-In the blue bar above the piano, there are the following functionalities:
-- The red minus and the green plus circles shorten and widen a note length. Note lengths go from 32th (shortest) to 1th (longest). Current length is displayed next to "Len:";
-- The red curvy arrow performs an undo, just like in the desktop app. Works only if you recorded a notes sequence;
-- The play button plays the recorded note sequence; it obviously does nothing if you didn't record anything yet;
-- The red 3d box adds a rest, like in the desktop app. Rests are "notes without volume". It's used only in recording mode, and the length used will be the one displayed next to "Len:";
-- The big red writing "OFF" is a toggle that lets you pass from free mode (OFF) to record mode (ON). Once it's on, any tapped note with a certain length (again, specified next to "Len:") will be saved;
-- "<<" and ">>" arrows on the sides of the bar will increase and decrease the current octave (showed after "Oct:").
+Once you start, you'll see the interface below. Refer to red numbers and the list below to see which button does what:
+![](https://github.com/MassimoTrionfante/Weedim_VirtualPiano/blob/master/img/preview1.png)
+- 1: get back to title screen;
+- 2: send recorded notes sequence to Weedim web services;
+- 3: get into the settings view;
+- 4: lower octaves;
+- 5: length of the recorded note; for example, if it's "4th" and you record a note, that note will be saved as a 4th note;
+- 6: buttons that shorten and widen note length;
+- 7: undo, deletes the last recorded note;
+- 8: play the recorded sequence of notes;
+- 9: add a rest in the recorded sequence;
+- 10: recording toggle, "ON" means it's in recording mode, "OFF" means it's in free mode;
+- 11: upper octaves;
+- 12: upper piano row;
+- 13: lower piano row.
 
-On the top of the screen, you'll see other 3 buttons:
-- The arrow button on the leftmost simply brings you back to the title screen;
-- The cog button on the rightmost simply brings you back to the settings screen, making you able to reset the URL;
-- The button in the middle is the button you press when sending your recorded tape to Weedim's database. Once you recorded something, after you're satisfied with the result, press it, and Weedim Virtual Piano will save the tape in its database.
-
-When you send a recorded tape, if everything went well, you'll see a sequence of numbers in red. That's the "session number" you have to input in Weedim's Web Interface. Once you input the correct number, the web app will load again, starting with the sequence you inputted from your phone!
+If you properly set up the URL of your Weedim instance, you can press on button "2" to send your sequence (if you recorded a sequence). Once you send it, a message with a red number will appear. The number in question is the "session number", it's the number you have to input in the Weedim's desktop interface: once you input it, the page will reload, starting with the notes you recorded from your mobile device!
 
 # Known bugs
 While the app does its job properly, the web interface could get randomly buggy when you use it to load recorded tapes from your phone. For more details, please refer to "Known bugs" in Weedim's repo here https://github.com/MassimoTrionfante/Weedim
