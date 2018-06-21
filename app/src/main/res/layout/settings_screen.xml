@@ -69,7 +69,7 @@
                 android:id="@+id/startapp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SAVE AND START THE APP" />
+                android:text="CHECK CONNECTIVITY AND START" />
 
             <TextView
                 android:id="@+id/error"

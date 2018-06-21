@@ -1,9 +1,12 @@
 package com.massimotrionfante.weedimvirtualpiano;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,9 +46,21 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private Button noteA;
     private Button noteAm;
     private Button noteB;
+    private Button noteCex;
+    private Button noteCmex;
+    private Button noteDex;
+    private Button noteDmex;
+    private Button noteEex;
+    private Button noteFex;
+    private Button noteFmex;
+    private Button noteGex;
+    private Button noteGmex;
+    private Button noteAex;
+    private Button noteAmex;
+    private Button noteBex;
 
     // Various Views
-    private Button send;
+    private ImageView send;
     private ImageView lowerOctave;
     private ImageView upperOctave;
     private TextView ottavaVisual;
@@ -60,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private ImageView rest;
     private ImageView settings;
     private ImageView title;
+    private TextView highOctave;
+    private TextView lowOctave;
+
+    private Stack<Button> noteButtons;
+    private Stack<Button> noteButtonsEx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         noteA = findViewById(R.id.A);
         noteAm = findViewById(R.id.Am);
         noteB = findViewById(R.id.B);
+        noteCex = findViewById(R.id.Cex);
+        noteCmex = findViewById(R.id.Cmex);
+        noteDex = findViewById(R.id.Dex);
+        noteDmex = findViewById(R.id.Dmex);
+        noteEex = findViewById(R.id.Eex);
+        noteFex = findViewById(R.id.Fex);
+        noteFmex = findViewById(R.id.Fmex);
+        noteGex = findViewById(R.id.Gex);
+        noteGmex = findViewById(R.id.Gmex);
+        noteAex = findViewById(R.id.Aex);
+        noteAmex = findViewById(R.id.Amex);
+        noteBex = findViewById(R.id.Bex);
+
         send = findViewById(R.id.send);
 
         outputMessage = findViewById(R.id.outputMessage);
@@ -109,15 +142,32 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         settings = findViewById(R.id.gotosettings);
         title = findViewById(R.id.gototitlescreen);
 
+        highOctave = findViewById(R.id.octavehigh);
+        lowOctave = findViewById(R.id.octavelow);
+
         ottava = 4;
         lunghezza = 4;
 
         // These two stacks will save all our notes and delays, in case user records
         notes = new Stack<Integer>();
         delays = new Stack<Integer>();
+        noteButtons = new Stack<Button>(); // Comfy stack for button notes
+        noteButtonsEx = new Stack<Button>();
+
+        // Push all the buttons inside the structure (later you'll see why I'm doing this)
+        noteButtons.push(noteC); noteButtons.push(noteCm); noteButtons.push(noteD);
+        noteButtons.push(noteDm); noteButtons.push(noteE); noteButtons.push(noteF);
+        noteButtons.push(noteFm); noteButtons.push(noteG); noteButtons.push(noteGm);
+        noteButtons.push(noteA); noteButtons.push(noteAm); noteButtons.push(noteB);
+
+        noteButtonsEx.push(noteCex); noteButtonsEx.push(noteCmex); noteButtonsEx.push(noteDex);
+        noteButtonsEx.push(noteDmex); noteButtonsEx.push(noteEex); noteButtonsEx.push(noteFex);
+        noteButtonsEx.push(noteFmex); noteButtonsEx.push(noteGex); noteButtonsEx.push(noteGmex);
+        noteButtonsEx.push(noteAex); noteButtonsEx.push(noteAmex); noteButtonsEx.push(noteBex);
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onStart() {
         super.onStart();
@@ -142,18 +192,67 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         });
 
         // Put all onClickListeners here, to serve the basic piano functionality
-        noteC.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteCm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteD.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteDm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteE.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteF.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteFm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteG.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteGm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteA.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteAm.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
-        noteB.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { determinaNota((Button)v); outputMessage.setText(""); sessionNum.setText(""); }});
+        // Smartly made with an iterable for loop ;)
+        // (that's why I created "noteButtons" btw)
+
+        // First we process low notes (the red-ish ones)...
+        for (Button b:noteButtons) {
+            b.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:               // Tapping down the button: play the note
+                            determinaNota((Button) v, false, false);
+                            if (onOffToggle.getText().equals("ON"))  // Show messages for recorded note (if recording)
+                            {
+                                outputMessage.setText("Note recorded");
+                                sessionNum.setText("");
+                            }
+                            else
+                            {
+                                if (!outputMessage.getText().equals("Executing song...")) {
+                                    outputMessage.setText("");
+                                }
+                                sessionNum.setText("");
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:                // Removing your finger from the button: stop the note
+                            determinaNota((Button) v, true, false);
+                            break;
+                    }
+                    return true;
+                }
+            });
+        }
+        // ...now we process high notes (the blue ones).
+        for (Button b:noteButtonsEx) {
+            b.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:               // Tapping down the button: play the note
+                            determinaNota((Button) v, false, true);
+                            if (onOffToggle.getText().equals("ON"))  // Show messages for recorded note (if recording)
+                            {
+                                outputMessage.setText("Note recorded");
+                                sessionNum.setText("");
+                            }
+                            else
+                            {
+                                if (!outputMessage.getText().equals("Executing song...")) {
+                                    outputMessage.setText("");
+                                }
+                                sessionNum.setText("");
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:                // Removing your finger from the button: stop the note
+                            determinaNota((Button) v, true, true);
+                            break;
+                    }
+                    return true;
+                }
+            });
+        }
 
         // Go back to title screen View on the arrow press
         title.setOnClickListener(new View.OnClickListener() {
@@ -190,13 +289,17 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (notes.size()>0)
+                if (notes.size()==0)
+                {
+                    outputMessage.setText("Nothing to erase!");
+                }
+                else
                 {
                     notes.pop();
                     delays.pop();
-                    outputMessage.setText("Deleted last recorded note.");
-                    sessionNum.setText("");
+                    outputMessage.setText("Deleted last recorded note");
                 }
+                sessionNum.setText("");
             }
         });
 
@@ -207,8 +310,8 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 outputMessage.setText("");
                 if (onOffToggle.getText().equals("ON")) {
                     notes.push(0);
-                    delays.push(lunghezza);
-                    outputMessage.setText("Added new rest.");
+                    delays.push(32/lunghezza);
+                    outputMessage.setText("Added new rest");
                     sessionNum.setText("");
                 }
             }
@@ -224,6 +327,9 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                     ottavaVisual.setText(Integer.toString(ottava-1));
                     outputMessage.setText("");
                     sessionNum.setText("");
+                    highOctave.setText("-- OCTAVE " + ottava + "--");
+                    int temp = ottava-1;
+                    lowOctave.setText("-- OCTAVE " + temp + "--");
                 }
             }
         });
@@ -232,11 +338,14 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         upperOctave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ottava<7) {
+                if (ottava<6) {
                     ottava++;
                     ottavaVisual.setText(Integer.toString(ottava-1));
                     outputMessage.setText("");
                     sessionNum.setText("");
+                    highOctave.setText("-- OCTAVE " + ottava + "--");
+                    int temp = ottava-1;
+                    lowOctave.setText("-- OCTAVE " + temp + "--");
                 }
             }
         });
@@ -275,12 +384,12 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 if (onOffToggle.getText().equals("OFF"))
                 {
                     onOffToggle.setText("ON");
-                    outputMessage.setText("Notes recording enabled!");
+                    outputMessage.setText("Notes recording enabled");
                 }
                 else
                 {
                     onOffToggle.setText("OFF");
-                    outputMessage.setText("Notes recording disabled!");
+                    outputMessage.setText("Notes recording disabled");
                 }
                 sessionNum.setText("");
             }
@@ -315,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         // Beginning jingle (55 57 59 60 with 0.1 second delay)
         // (note that, unlike Midi.js, this plugin doesn't give you a delay input value, so I was forced to use Thread.sleep())
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
             playNote((byte)67);
             Thread.sleep(100);
             playNote((byte)69);
@@ -323,7 +432,6 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             playNote((byte)71);
             Thread.sleep(100);
             playNote((byte)72);
-            Thread.sleep(100);
         } catch (Exception e){}
     }
 
@@ -337,9 +445,19 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         midiDriver.write(musica);
     }
 
+    // Base function that stops a note
+    private void stopNote(byte nota){
+        byte[] musica = new byte[3];
+        musica[0] = (byte) 0x80; // 0x80 -> note OFF in channel 0
+        musica[1] = nota;
+        musica[2] = (byte) 127;
+        // Stop the note!
+        midiDriver.write(musica);
+    }
+
     // This function plays a note depending on what's in its text field.
     // It's used for the Piano to work properly, and to play the correct notes.
-    private void determinaNota(Button v)
+    private void determinaNota(Button v, boolean isStop, boolean isHigh)
     {
         String ottavaStr = v.getText().toString();
         int nota=0;
@@ -376,10 +494,21 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             nota += 1;
         }
 
-        playNote((byte)nota); // Play the note, once we got which one it is.
+        if (isHigh) // If we pressed the higher notes (the ones in blue)
+        {
+            nota +=12;
+        }
+
+        if (isStop) // Check if we have to stop the note or not
+        {
+            stopNote((byte)nota);
+        }
+        else {
+            playNote((byte) nota); // Play the note, once we got which one it is.
+        }
 
         //If it's recording, then store note value and delay in global arrays
-        if (onOffToggle.getText().equals("ON"))
+        if (onOffToggle.getText().equals("ON") && !isStop)
         {
             notes.push(nota);
             delays.push(32/lunghezza);
@@ -455,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             else if (result.equals("NOP")) // NOP -> We didn't record anything
             {
                 outputMessage.setText("");
-                sessionNum.setText("Your didn't record anything yet!");
+                sessionNum.setText("Your didn't record anything yet");
             }
             else {
                 outputMessage.setText("Record was sent with session number:"); // In none of above, record was sent!

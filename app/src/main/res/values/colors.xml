@@ -8,7 +8,12 @@
     <color name="weedimPurple">#804080</color>
     <color name="weedimRed">#804040</color>
     <color name="weedimWhite">#A0A0FF</color>
+    <color name="weedimWhiteEx">#DFB0FF</color>
+    <color name="weedimWhiteEx2">#DFF0F0</color>
     <color name="weedimBlack">#200060</color>
+    <color name="weedimBlackEx">#401060</color>
+    <color name="weedimBlackEx2">#603080</color>
+    <color name="weedimBlackEx3">#200040</color>
     <color name="weedimDarkGray">#402080</color>
     <color name="white">#FFFFFF</color>
     <color name="weedimGreen">#40A080</color>

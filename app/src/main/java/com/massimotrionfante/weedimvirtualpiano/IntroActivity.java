@@ -12,7 +12,7 @@ public class IntroActivity extends AppCompatActivity {
     private Button start;    // 3 buttons of our View
     private Button settings;
     private Button exit;
-    private String weedimServer="http://192.168.1.4:5000"; // Default server for Weedim (from my local pc lol)
+    private String weedimServer="http://192.168.1.5:5000"; // Default server for Weedim (from my local pc lol)
 
     @Override
     public void onCreate(Bundle savedinstanceState)
