@@ -18,6 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private String weedimLink; // the URL for Weedim's web services
     private Button start;  // various views used.
+    private Button gotoTitle;
     private EditText input;
     private TextView errors;
 
@@ -30,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         start = findViewById(R.id.startapp);
         input = findViewById(R.id.weedimlink);
         errors = findViewById(R.id.error);
+        gotoTitle = findViewById(R.id.gototitle);
 
     }
 
@@ -55,6 +57,16 @@ public class SettingsActivity extends AppCompatActivity {
                     } catch (Exception e){}
                     check.execute(miaURL);  //...and execute!
                 }
+            }
+        });
+
+        // If we click on the second button, bring user to titlescreen
+        gotoTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent titolo = new Intent(SettingsActivity.this, IntroActivity.class);
+                titolo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // This flag is super useful: it makes sure older activities go away.
+                startActivity(titolo);
             }
         });
 
@@ -101,7 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
             else // Else, just print an error message.
             {
-                errors.setText("Can't connect from the inputted URL...");
+                errors.setText(R.string.cantconnect);
             }
         }
 

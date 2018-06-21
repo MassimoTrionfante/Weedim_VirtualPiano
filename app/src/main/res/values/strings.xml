@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Weedim</string>
+    <string name="title">WEEDIM</string>
+    <string name="subtitle">Virtual Piano</string>
+    <string name="buttonstart">START</string>
+    <string name="buttonsettings">SETTINGS</string>
+    <string name="buttonexit">EXIT</string>
+    <string name="subtitlesettings">Set Weedim URL</string>
+    <string name="explaination">Set the URL where your Weedim web app is running. A valid example would be\nhttp://192.168.1.10:5000</string>
+    <string name="urlhint">http://your_ip:your_port</string>
+    <string name="startfromsettings">CHECK CONNECTIVITY AND START</string>
+    <string name="backtotitle">BACK TO MAIN MENU</string>
+    <string name="note_recorded">Note recorded</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="recenabled">Notes recording enabled</string>
+    <string name="recdisabled">Notes recording disabled</string>
+    <string name="connectissues">There are issues with connectivity&#8230;</string>
+    <string name="didntrec">Your didn\'t record anything yet</string>
+    <string name="recsent">Record was sent with session number:</string>
+    <string name="execend">Execution terminated</string>
+    <string name="newrest">Added new rest</string>
+    <string name="dellastnote">Deleted last recorded note</string>
+    <string name="canterase">Nothing to erase!</string>
+    <string name="execsong">Executing song&#8230;</string>
+    <string name="cantconnect">Can\'t connect from the inputted URL&#8230;</string>
+    <string name="initoct">-- OCTAVE 4 --</string>
+    <string name="initoct2">-- OCTAVE 3 --</string>
+    <string name="recico">Rec. </string>
+    <string name="th">th</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="length">Len:</string>
+    <string name="octave">Oct:</string>
 </resources>

@@ -18,78 +18,81 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="Oct:"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/oct"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="3"
-            android:textColor="@color/weedimGreen"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
-            app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/lowOctave"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_rew" />
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/lowermyoctave" />
 
         <ImageView
             android:id="@+id/uppOctave"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_ff" />
+            app:srcCompat="@drawable/increasemyoctave" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Len:"
+            android:text="@string/length"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toEndOf="@+id/oct"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/lowOctave"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/lowLen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/sottrai" />
+
+        <ImageView
+            android:id="@+id/uppLen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/lowLen"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/aggiungi" />
 
         <TextView
             android:id="@+id/length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="4"
+            android:text="@string/four"
             android:textColor="@color/weedimGreen"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.01"
@@ -101,8 +104,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="th"
-            android:textSize="20dp"
+            android:text="@string/th"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.0"
@@ -111,34 +114,11 @@
             app:layout_constraintVertical_bias="0.7" />
 
         <ImageView
-            android:id="@+id/lowLen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
-            app:layout_constraintHorizontal_bias="0.01"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sottrai" />
-
-        <ImageView
-            android:id="@+id/uppLen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/uppOctave"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/lowLen"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/aggiungi" />
-
-        <ImageView
             android:id="@+id/undo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.07"
@@ -151,20 +131,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toEndOf="@+id/undo"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@drawable/playmysong" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Rec. "
-            android:textSize="20dp"
+            android:text="@string/recico"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.52"
@@ -176,9 +157,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="OFF"
+            android:text="@string/off"
             android:textColor="#C04040"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/uppOctave"
             app:layout_constraintHorizontal_bias="0.0"
@@ -190,6 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:contentDescription="@android:string/autofill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintHorizontal_bias="0.41"
@@ -225,10 +207,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/weedimBlack"
-                android:text="-- OCTAVE 4 --"
+                android:text="@string/initoct"
                 android:textAlignment="center"
                 android:textColor="@color/weedimWhite"
-                android:textSize="8dp" />
+                android:textSize="12sp" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -419,10 +401,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/weedimBlackEx"
-                android:text="-- OCTAVE 3 --"
+                android:text="@string/initoct2"
                 android:textAlignment="center"
                 android:textColor="@color/weedimWhiteEx2"
-                android:textSize="8dp" />
+                android:textSize="12sp" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -621,9 +603,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
-        android:text="Plugin loaded succesfully!"
         android:textColor="@color/weedimWhiteEx2"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/functions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -636,7 +617,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:textColor="#FF0000"
-        android:textSize="18dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/functions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -648,6 +629,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tastonero"
+        android:contentDescription="@android:string/autofill"
         app:layout_constraintBottom_toTopOf="@+id/functions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -659,6 +641,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tastoneroex"
+        android:contentDescription="@android:string/autofill"
         app:layout_constraintBottom_toTopOf="@+id/functions"
         app:layout_constraintEnd_toStartOf="@+id/gotosettings"
         app:layout_constraintStart_toEndOf="@+id/gototitlescreen"
@@ -671,6 +654,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tastonero"
+        android:contentDescription="@android:string/autofill"
         app:layout_constraintBottom_toTopOf="@+id/functions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -19,10 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Massimo\Desktop\send.png" />
-                                      <entry key="outputName" value="sendmusictoweedim" />
+                                      <entry key="imageAsset" value="C:\Users\Massimo\Desktop\ffw.png" />
+                                      <entry key="outputName" value="increasemyoctave" />
                                       <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="ba4658" />
+                                      <entry key="themeColor" value="40a080" />
                                     </map>
                                   </option>
                                 </PersistentState>

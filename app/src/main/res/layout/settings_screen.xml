@@ -24,9 +24,10 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SETTINGS"
+            android:text="@string/buttonsettings"
             android:textAlignment="center"
-            android:textSize="40dp"
+            android:textColor="@color/weedimBlue"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,41 +44,54 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set Weedim IP"
+                android:text="@string/subtitlesettings"
                 android:textAlignment="center"
-                android:textSize="30dp" />
+                android:textColor="@color/weedimRed"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set the http link where your Weedim web app is running. A valid example would be http://192.168.1.10:5000\nClick on the button to save changes."
+                android:text="@string/explaination"
                 android:textAlignment="center"
-                android:textSize="20dp" />
+                android:textColor="@color/weedimPurple"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/weedimlink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="http://your_ip:your_port"
+                android:hint="@string/urlhint"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
-                android:textSize="30dp" />
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="#FF0000"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/startapp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CHECK CONNECTIVITY AND START" />
+                android:background="@drawable/tastoneroex"
+                android:text="@string/startfromsettings"
+                android:textColor="@color/weedimWhiteEx" />
 
-            <TextView
-                android:id="@+id/error"
+            <Button
+                android:id="@+id/gototitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="#FF0000"
-                android:textSize="20dp" />
+                android:background="@drawable/tastonero"
+                android:text="@string/backtotitle"
+                android:textColor="@color/weedimWhite" />
+
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

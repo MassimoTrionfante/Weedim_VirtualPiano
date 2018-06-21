@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
     private ImageView send;
     private ImageView lowerOctave;
     private ImageView upperOctave;
-    private TextView ottavaVisual;
     private TextView outputMessage;
     private TextView sessionNum;
     private ImageView lowerLength;
@@ -129,8 +128,6 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         lowerOctave = findViewById(R.id.lowOctave);
         upperOctave = findViewById(R.id.uppOctave);
 
-        ottavaVisual = findViewById(R.id.oct);
-
         lowerLength = findViewById(R.id.lowLen);
         upperLength = findViewById(R.id.uppLen);
         lengthVisual = findViewById(R.id.length);
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         noteButtons = new Stack<Button>(); // Comfy stack for button notes
         noteButtonsEx = new Stack<Button>();
 
-        // Push all the buttons inside the structure (later you'll see why I'm doing this)
+        // Push all the buttons inside the structures (later you'll see why I'm doing this)
         noteButtons.push(noteC); noteButtons.push(noteCm); noteButtons.push(noteD);
         noteButtons.push(noteDm); noteButtons.push(noteE); noteButtons.push(noteF);
         noteButtons.push(noteFm); noteButtons.push(noteG); noteButtons.push(noteGm);
@@ -205,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                             determinaNota((Button) v, false, false);
                             if (onOffToggle.getText().equals("ON"))  // Show messages for recorded note (if recording)
                             {
-                                outputMessage.setText("Note recorded");
+                                outputMessage.setText(R.string.note_recorded);
                                 sessionNum.setText("");
                             }
                             else
@@ -234,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                             determinaNota((Button) v, false, true);
                             if (onOffToggle.getText().equals("ON"))  // Show messages for recorded note (if recording)
                             {
-                                outputMessage.setText("Note recorded");
+                                outputMessage.setText(R.string.note_recorded);
                                 sessionNum.setText("");
                             }
                             else
@@ -280,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             public void onClick(View v) {
                 ExtraThread myPlay = new ExtraThread(); // This could require more than 7 seconds.
                 myPlay.execute(); // Thus, we'll give this task to an AsyncTask.
-                outputMessage.setText("Executing song...");
+                outputMessage.setText(R.string.execsong);
                 sessionNum.setText("");
             }
         });
@@ -291,13 +288,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             public void onClick(View v) {
                 if (notes.size()==0)
                 {
-                    outputMessage.setText("Nothing to erase!");
+                    outputMessage.setText(R.string.canterase);
                 }
                 else
                 {
                     notes.pop();
                     delays.pop();
-                    outputMessage.setText("Deleted last recorded note");
+                    outputMessage.setText(R.string.dellastnote);
                 }
                 sessionNum.setText("");
             }
@@ -311,25 +308,24 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
                 if (onOffToggle.getText().equals("ON")) {
                     notes.push(0);
                     delays.push(32/lunghezza);
-                    outputMessage.setText("Added new rest");
+                    outputMessage.setText(R.string.newrest);
                     sessionNum.setText("");
                 }
             }
         });
 
         //Lower octave by 1
-        //(I had to find some workarounds, to prevent unvalid notes to play)
+        //(I had to find some workarounds, to prevent invalid notes to play)
         lowerOctave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ottava>2) {
                     ottava--;
-                    ottavaVisual.setText(Integer.toString(ottava-1));
                     outputMessage.setText("");
                     sessionNum.setText("");
-                    highOctave.setText("-- OCTAVE " + ottava + "--");
+                    highOctave.setText("-- OCTAVE " + ottava + " --");
                     int temp = ottava-1;
-                    lowOctave.setText("-- OCTAVE " + temp + "--");
+                    lowOctave.setText("-- OCTAVE " + temp + " --");
                 }
             }
         });
@@ -340,12 +336,11 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             public void onClick(View v) {
                 if (ottava<6) {
                     ottava++;
-                    ottavaVisual.setText(Integer.toString(ottava-1));
                     outputMessage.setText("");
                     sessionNum.setText("");
-                    highOctave.setText("-- OCTAVE " + ottava + "--");
+                    highOctave.setText("-- OCTAVE " + ottava + " --");
                     int temp = ottava-1;
-                    lowOctave.setText("-- OCTAVE " + temp + "--");
+                    lowOctave.setText("-- OCTAVE " + temp + " --");
                 }
             }
         });
@@ -383,13 +378,13 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             public void onClick(View v) {
                 if (onOffToggle.getText().equals("OFF"))
                 {
-                    onOffToggle.setText("ON");
-                    outputMessage.setText("Notes recording enabled");
+                    onOffToggle.setText(R.string.on);
+                    outputMessage.setText(R.string.recenabled);
                 }
                 else
                 {
-                    onOffToggle.setText("OFF");
-                    outputMessage.setText("Notes recording disabled");
+                    onOffToggle.setText(R.string.off);
+                    outputMessage.setText(R.string.recdisabled);
                 }
                 sessionNum.setText("");
             }
@@ -531,7 +526,7 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
         }
         public void onPostExecute(String result)
         {
-            outputMessage.setText("Execution terminated");
+            outputMessage.setText(R.string.execend);
             sessionNum.setText("");
         }
     }
@@ -579,15 +574,15 @@ public class MainActivity extends AppCompatActivity implements MidiDriver.OnMidi
             if (result.equals("WTF")) // WTF -> Connectivity issues
             {
                 outputMessage.setText("");
-                sessionNum.setText("There are issues with connectivity...");
+                sessionNum.setText(R.string.connectissues);
             }
             else if (result.equals("NOP")) // NOP -> We didn't record anything
             {
                 outputMessage.setText("");
-                sessionNum.setText("Your didn't record anything yet");
+                sessionNum.setText(R.string.didntrec);
             }
             else {
-                outputMessage.setText("Record was sent with session number:"); // In none of above, record was sent!
+                outputMessage.setText(R.string.recsent); // In none of above, record was sent!
                 sessionNum.setText(result); // Give session number for user to use in the Weedim Web App.
             }
         }

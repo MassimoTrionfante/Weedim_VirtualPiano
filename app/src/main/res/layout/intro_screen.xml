@@ -9,6 +9,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@android:string/autofill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,19 +31,19 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WEEDIM"
+            android:text="@string/title"
             android:textAlignment="center"
             android:textColor="@color/weedimBlue"
-            android:textSize="60dp" />
+            android:textSize="60sp" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Virtual Piano"
+            android:text="@string/subtitle"
             android:textAlignment="center"
             android:textColor="@color/weedimWhite"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,24 +57,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/tastonero"
-                android:text="START"
-                android:textSize="30dp" />
+                android:text="@string/buttonstart"
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/tastonero"
-                android:text="SETTINGS"
-                android:textSize="30dp" />
+                android:text="@string/buttonsettings"
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/tastonero"
-                android:text="EXIT"
-                android:textSize="30dp" />
+                android:text="@string/buttonexit"
+                android:textSize="30sp" />
         </LinearLayout>
     </LinearLayout>
 
